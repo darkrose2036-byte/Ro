@@ -1,0 +1,160 @@
+/* =====================================================
+   RESET
+===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0f1720;
+    color: #e6e8ee;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Soft animated background */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(120, 90, 220, 0.25), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(50, 160, 220, 0.22), transparent 50%),
+        linear-gradient(180deg, #0f1720 0%, #182233 100%);
+    background-size: 200% 200%;
+    animation: bgShift 20s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+    0%, 100% { background-position: 0% 0%; }
+    50%      { background-position: 100% 100%; }
+}
+
+/* =====================================================
+   HERO
+===================================================== */
+.hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: linear-gradient(90deg, #fff, #b8a8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: #a5aebd;
+    font-size: 16px;
+}
+
+/* =====================================================
+   GRID
+===================================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    padding: 20px 0 60px;
+}
+
+/* =====================================================
+   CAT CARD
+===================================================== */
+.cat-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(160, 140, 255, 0.25);
+    border-radius: 18px;
+    padding: 24px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.cat-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(160, 140, 255, 0.6);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(140, 110, 255, 0.35);
+}
+
+.cat-emoji {
+    font-size: 64px;
+    margin-bottom: 12px;
+    display: inline-block;
+    animation: floaty 3.5s ease-in-out infinite;
+}
+
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+.cat-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 14px;
+}
+
+.cat-info {
+    font-size: 14px;
+    color: #a5aebd;
+    margin: 6px 0;
+    text-align: left;
+}
+
+.cat-info strong {
+    color: #c8b8ff;
+    font-weight: 600;
+}
+
+/* =====================================================
+   STATES
+===================================================== */
+.loading,
+.error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #a5aebd;
+    font-size: 16px;
+}
+
+.error {
+    color: #ff5d7a;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+.footer {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid rgba(160, 140, 255, 0.15);
+    color: #8a93a5;
+    font-size: 14px;
+}

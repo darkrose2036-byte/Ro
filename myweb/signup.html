@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - Cat Store</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .auth-container { max-width: 450px; margin: 60px auto; padding: 30px; background: #151d34; border-radius: 18px; border: 1px solid #283550; }
+        .auth-container h1 { color: #72a7ff; text-align: center; }
+        .auth-container input { width: 100%; margin-bottom: 15px; padding: 14px; }
+        .auth-container button { width: 100%; padding: 14px; }
+        .message { text-align: center; margin-top: 15px; }
+        .message.success { color: #5ee1a2; }
+        .message.error { color: #ff6b6b; }
+        .auth-link { text-align: center; margin-top: 15px; color: #aab7d2; }
+        .auth-link a { color: #72a7ff; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Cat Store 😼</div>
+        <div class="nav-right">
+            <span>Inventory Dashboard</span>
+            <span class="admin-badge">Admin</span>
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <h1>Create an Account</h1>
+        <form id="signupForm">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="password" id="password" placeholder="Password (min 6 characters)" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p id="message" class="message"></p>
+        <p class="auth-link">Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+    <script src="signup.js"></script>
+</body>
+</html>
