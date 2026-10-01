@@ -1,44 +1,48 @@
 <?php
-session_start();
-require_once "db.php";
+header("Content-Type: application/json; charset=UTF-8");
 
-if (!isset($_SESSION["user_id"])) {
-    sendJSON(["success" => true, "items" => []]);
+// Connect to the PENNY database
+$host     = "localhost";
+$user     = "root";
+$pass     = "";
+$dbname   = "penny";
+
+$conn = new mysqli($host, $user, $pass, $dbname);
+
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "error"   => "Database connection failed: " . $conn->connect_error
+    ]);
+    exit;
 }
 
-$userId = $_SESSION["user_id"];
+$conn->set_charset("utf8mb4");
 
-$stmt = $conn->prepare("
-    SELECT 
-        c.cart_id,
-        c.sticker_id,
-        c.quantity,
-        s.name,
-        s.price,
-        s.emoji
-    FROM cart c
-    INNER JOIN stickers s ON c.sticker_id = s.id
-    WHERE c.user_id = ?
-    ORDER BY c.added_at DESC
-");
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-$result = $stmt->get_result();
+$result = $conn->query("SELECT id, cat_name, age, breed FROM cat ORDER BY id");
 
-$items = [];
+if (!$result) {
+    http_response_code(500);
+    echo json_encode(["success" => false, "error" => $conn->error]);
+    $conn->close();
+    exit;
+}
+
+$cats = [];
 while ($row = $result->fetch_assoc()) {
-    $items[] = [
-        "cart_id"    => (int) $row["cart_id"],
-        "sticker_id" => (int) $row["sticker_id"],
-        "quantity"   => (int) $row["quantity"],
-        "name"       => $row["name"],
-        "price"      => (float) $row["price"],
-        "emoji"      => $row["emoji"]
+    $cats[] = [
+        "id"       => (int) $row["id"],
+        "cat_name" => $row["cat_name"],
+        "age"      => (int) $row["age"],
+        "breed"    => $row["breed"]
     ];
 }
 
-$stmt->close();
 $conn->close();
 
-sendJSON(["success" => true, "items" => $items]);
+echo json_encode([
+    "success" => true,
+    "cats"    => $cats
+]);
 ?>

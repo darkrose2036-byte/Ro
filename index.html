@@ -20,8 +20,54 @@
     </main>
 
     <footer class="footer">
-     
+        <p>Powered by HTML+CSS+JS+PHP + MySQL 🐾</p>
     </footer>
+
+    <script>
+        // Fetch cats from the API
+        async function loadCats() {
+            const grid = document.getElementById("catGrid");
+
+            try {
+                const response = await fetch("get_cats.php", { cache: "no-store" });
+                const data = await response.json();
+
+                if (!data.success || !Array.isArray(data.cats)) {
+                    throw new Error(data.error || "Could not load cats.");
+                }
+
+                if (data.cats.length === 0) {
+                    grid.innerHTML = "<p class='loading'>No cats found in the database.</p>";
+                    return;
+                }
+
+                grid.innerHTML = "";
+
+                data.cats.forEach(cat => {
+                    const card = document.createElement("div");
+                    card.className = "cat-card";
+
+                    card.innerHTML = `
+                        <div class="cat-emoji">🐱</div>
+                        <h2 class="cat-name"></h2>
+                        <p class="cat-info"><strong>Breed:</strong> ${cat.breed}</p>
+                        <p class="cat-info"><strong>Age:</strong> ${cat.age} ${cat.age === 1 ? "year" : "years"}</p>
+                        <p class="cat-info"><strong>ID:</strong> #${cat.id}</p>
+                    `;
+
+                    card.querySelector(".cat-name").textContent = cat.cat_name;
+
+                    grid.appendChild(card);
+                });
+
+            } catch (err) {
+                console.error(err);
+                grid.innerHTML = `<p class='error'>❌ ${err.message}</p>`;
+            }
+        }
+
+        loadCats();
+    </script>
 
 </body>
 </html>
